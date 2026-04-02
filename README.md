@@ -5,23 +5,38 @@ PICK IT 🍽️
 Features
 
 -> User registration and login
+
 -> Table booking system
+
 -> Timeslot management
+
 -> Menu management
+
 -> Offers 
+
 -> Restaurant browsing
+
 -> Owner dashboard
+
 -> Restaurant analytics
+
 
 Tech Stack
 
 -> Python
+
 -> Django
+
 -> SQLite
+
 -> Bootstrap
+
 -> chart.js
+
 -> HTML
+
 -> CSS
+
 
 
 Screenshots
