@@ -3,7 +3,6 @@ from accounts.models import User
 from django.conf import settings
 
 class Restaurant(models.Model):
-
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     food_type = models.CharField(max_length=50)
@@ -17,7 +16,6 @@ class Restaurant(models.Model):
 
 
 class Table(models.Model):
-
     restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE)
     table_number = models.IntegerField()
     seats = models.IntegerField()
@@ -32,10 +30,10 @@ class TimeSlot(models.Model):
     end_time = models.TimeField()
 
     def __str__(self):
-        # This makes the dropdowns in your "Add Table" form look professional
         return f"{self.start_time.strftime('%I:%M %p')} - {self.end_time.strftime('%I:%M %p')}"
 
-# If you want to assign specific slots to specific tables:
+
+
 class TableAvailability(models.Model):
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     timeslot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
@@ -71,7 +69,6 @@ class Booking(models.Model):
 
 
 class Rating(models.Model):
-
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     rating = models.IntegerField()

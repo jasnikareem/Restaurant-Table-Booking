@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.db.models import Count, Avg
-from .forms import TableForm, RestaurantForm
+from .forms import TableForm
 from django.db.models import Count
 from .models import Restaurant, Rating, TimeSlot, Table,Booking
 from django.utils import timezone
@@ -13,13 +13,13 @@ User = get_user_model()
 
 # --- HELPER FUNCTIONS ---
 def _has_management_rights(user, restaurant):
-    """Check if a user is the owner of the restaurant or a platform admin."""
+    # Check if a user is the owner of the restaurant or a platform admin.
     return restaurant.owner == user or getattr(user, 'role', None) == 'admin'
 
 # --- RESTAURANT VIEWS ---
 
 def restaurant_list(request):
-    """Public list of restaurants with location search."""
+    # Public list of restaurants with location search.
     location = request.GET.get('location', '').strip()
     restaurants = Restaurant.objects.all()
 
@@ -31,8 +31,10 @@ def restaurant_list(request):
         'search_location': location
     })
 
+
+
 def restaurant_detail(request, restaurant_id):
-    """Detailed view for a single restaurant."""
+    # Detailed view for a single restaurant.
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     ratings = Rating.objects.filter(restaurant=restaurant)
     slots = TimeSlot.objects.filter(restaurant=restaurant)
@@ -53,9 +55,11 @@ def restaurant_detail(request, restaurant_id):
         'tables': tables
     })
 
+
+
 @login_required
 def add_restaurant(request):
-    """Admin or Owner registration of a new restaurant."""
+    # Admin or Owner registration of a new restaurant.
     if getattr(request.user, 'role', None) not in ['admin', 'owner']:
         messages.error(request, "Access Denied: Only Admins or Owners can register restaurants.")
         return redirect('home')
@@ -91,6 +95,7 @@ def add_restaurant(request):
 
     return render(request, 'restaurants/add_restaurant.html', {'all_owners': all_owners})
 
+
 @login_required
 def delete_restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
@@ -105,6 +110,8 @@ def delete_restaurant(request, restaurant_id):
         return redirect('manage_restaurants') 
         
     return render(request, 'restaurants/delete_restaurant.html', {'restaurant': restaurant})
+
+
 
 # --- DATA MANAGEMENT (Slots & Tables) ---
 
@@ -125,6 +132,8 @@ def add_table(request, restaurant_id):
     
     return render(request, 'restaurants/add_table.html', {'form': form, 'restaurant': restaurant})
 
+
+
 @login_required
 def add_timeslot(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
@@ -140,6 +149,8 @@ def add_timeslot(request, restaurant_id):
             return redirect('restaurant_detail', restaurant_id=restaurant.id)
             
     return render(request, 'restaurants/add_timeslot.html', {'restaurant': restaurant})
+
+
 
 # --- REVIEWS & RATINGS ---
 @login_required
@@ -160,13 +171,15 @@ def add_review(request, restaurant_id):
                 restaurant=restaurant,
                 user=request.user,
                 rating=rating,
-                review=comment # Your model uses 'review', form uses 'comment'
+                review=comment 
             )
             messages.success(request, "Review added!")
         else:
             messages.error(request, "Please provide both a rating and a comment.")
             
     return redirect('restaurant_detail', restaurant_id=restaurant.id)
+
+
 
 # --- DASHBOARDS ---
 @login_required
@@ -185,7 +198,7 @@ def restaurant_owner_dashboard(request):
     # Analytics Calculations
     total_bookings = all_bookings.count()
     today = timezone.now().date()
-    today_bookings = all_bookings.filter(date=today).count() # Changed from created_at to date for accuracy
+    today_bookings = all_bookings.filter(date=today).count() 
 
     # Chart Data (Last 7 Days)
     line_data_qs = (
@@ -210,11 +223,12 @@ def restaurant_owner_dashboard(request):
     return render(request, 'restaurants/restaurant_dashboard.html', context)
 
 
+
 def manage_tables(request, restaurant_id):
-    # 1. Fetch the restaurant first
+    #  Fetch the restaurant first
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     
-    # 2. SECURITY CHECK: Only Admin or Owner can pass
+    #  SECURITY CHECK: Only Admin or Owner can pass
     if not request.user.is_staff and restaurant.owner != request.user:
         messages.error(request, "You do not have permission to manage these tables.")
         # Dynamic redirect: Admins go to Admin Dash, Owners go to Restaurant Dash
@@ -222,7 +236,7 @@ def manage_tables(request, restaurant_id):
             return redirect('admin_dashboard')
         return redirect('restaurant_dashboard')
 
-    # 3. Handle POST Actions (Add or Delete)
+    #  Handle POST Actions (Add or Delete)
     if request.method == "POST":
         
         # --- LOGIC: DELETE TABLE ---
@@ -248,15 +262,17 @@ def manage_tables(request, restaurant_id):
             messages.success(request, f"Table {table_number} added successfully!")
             return redirect('manage_tables', restaurant_id=restaurant.id)
 
-    # 4. DATA RETRIEVAL (For the table list)
+    #  DATA RETRIEVAL (For the table list)
     tables = restaurant.table_set.all().order_by('table_number')
     
-    # 5. RENDER THE PAGE
+    
     return render(request, 'restaurants/manage_tables.html', {
         'restaurant': restaurant,
         'tables': tables,
         'is_admin': request.user.is_staff
     })
+
+
 
 def edit_table(request, restaurant_id, table_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
@@ -280,6 +296,8 @@ def edit_table(request, restaurant_id, table_id):
         'table': table,
         'is_admin': request.user.is_staff
     })
+
+
 
 @login_required
 def edit_restaurant(request, restaurant_id):

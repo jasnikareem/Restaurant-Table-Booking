@@ -7,7 +7,6 @@ from django.contrib import messages
 
 
 
-# Helper function to check permissions (DRY - Don't Repeat Yourself)
 def has_permission(user, restaurant):
     return user.role == 'admin' or restaurant.owner == user
 
@@ -16,10 +15,10 @@ def restaurant_menu(request, restaurant_id):
     menus = Menu.objects.filter(restaurant=restaurant)
     categories = menus.values_list('category', flat=True).distinct()
 
-    # Bulletproof check for Admin or Owner
+    # check for Admin or Owner
     is_owner = False
     if request.user.is_authenticated:
-        user_role = str(request.user.role).lower() # Handles 'Admin' or 'admin'
+        user_role = str(request.user.role).lower() 
         if user_role == 'admin' or restaurant.owner == request.user:
             is_owner = True
 
@@ -52,6 +51,8 @@ def add_menu(request, restaurant_id):
 
     return render(request, 'menu/add_menu.html', {'restaurant': restaurant})
 
+
+
 @login_required
 def edit_menu(request, menu_id):
     menu = get_object_or_404(Menu, id=menu_id)
@@ -70,6 +71,8 @@ def edit_menu(request, menu_id):
         return redirect('restaurant_menu', restaurant_id=menu.restaurant.id)
 
     return render(request, 'menu/edit_menu.html', {'menu': menu})
+
+
 
 @login_required
 def delete_menu(request, menu_id):

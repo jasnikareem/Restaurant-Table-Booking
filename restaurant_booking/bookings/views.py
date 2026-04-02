@@ -61,13 +61,11 @@ def book_table(request, restaurant_id):
         "selected_date": selected_date,
         "selected_slot": selected_slot
     })
-  
+
+
 @login_required
 def booking_success(request, booking_id):
-    
     booking = get_object_or_404(Booking, id=booking_id)
-    
-    
     return render(request, 'booking/booking_success.html', {
         'booking': booking,
         'restaurant': booking.restaurant
@@ -92,6 +90,7 @@ def manage_bookings(request):
 
     return render(request, "booking/manage_bookings.html", {"bookings": bookings})
 
+
 # Cancel booking
 
 @login_required
@@ -100,13 +99,10 @@ def cancel_booking(request, booking_id):
 
     if booking.user != request.user and not request.user.is_superuser:
         messages.error(request, "Permission denied.")
-        # FIX: Change 'my_bookings' to 'manage_bookings'
         return redirect('manage_bookings') 
 
     booking.delete() 
     messages.success(request, "Booking cancelled successfully.")
-    
-    # FIX: Change 'my_bookings' to 'manage_bookings'
     return redirect('manage_bookings')
 
 
@@ -117,11 +113,10 @@ def edit_booking(request, booking_id):
     restaurant = booking.restaurant
     
     if request.method == 'POST':
-        # 1. Get the data from the form names in your HTML
         new_date = request.POST.get('date')
-        new_slot_id = request.POST.get('timeslot') # Matches name="timeslot" in HTML
-        new_table_id = request.POST.get('table')   # Matches name="table" in HTML
-        new_guests = request.POST.get('guests')    # Matches name="guests" in HTML
+        new_slot_id = request.POST.get('timeslot') 
+        new_table_id = request.POST.get('table')   
+        new_guests = request.POST.get('guests')    
 
         # 2. Update the booking object attributes
         booking.date = new_date
@@ -133,8 +128,6 @@ def edit_booking(request, booking_id):
         booking.save()
         
         messages.success(request, "Booking updated successfully!")
-        
-        # 4. Use 'manage_bookings' because that is the name of your list view
         return redirect('manage_bookings') 
 
     # --- GET Logic ---
@@ -147,7 +140,9 @@ def edit_booking(request, booking_id):
         'tables': tables,
         'restaurant': restaurant,
     })
-# Add booking using form
+
+
+# Add booking
 
 @login_required
 def add_booking(request):
@@ -174,7 +169,6 @@ def add_booking(request):
 def select_menu(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
     restaurant = booking.restaurant
-    
     
     menus = Menu.objects.filter(restaurant=restaurant)
 
