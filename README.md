@@ -1,7 +1,9 @@
 PICK IT 🍽️
+
  Pick it is a restaurant table booking web application built using Django
 
 Features
+
 -> User registration and login
 -> Table booking system
 -> Timeslot management
@@ -12,6 +14,7 @@ Features
 -> Restaurant analytics
 
 Tech Stack
+
 -> Python
 -> Django
 -> SQLite
