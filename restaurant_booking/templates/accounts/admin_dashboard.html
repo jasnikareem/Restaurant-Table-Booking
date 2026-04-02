@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %} <div class="dashboard-wrapper py-5"> <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold" style="color: var(--brand-red) !important;">ADMIN DASHBOARD</h2>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <a href="{% url 'manage_users' %}" class="text-decoration-none">
+                    <div class="admin-card text-center p-4 shadow-sm bg-white rounded-4">
+                        <h3 class="display-6 fw-bold text-dark">{{ total_users }}</h3>
+                        <p class="text-uppercase small fw-bold mb-0 text-muted">Total Users</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-3">
+                <a href="{% url 'manage_restaurants' %}" class="text-decoration-none">
+                    <div class="admin-card text-center p-4 shadow-sm bg-white rounded-4">
+                        <h3 class="display-6 fw-bold text-dark">{{ total_restaurants }}</h3>
+                        <p class="text-uppercase small fw-bold mb-0 text-muted">Total Restaurants</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-3">
+                <a href="{% url 'manage_bookings' %}" class="text-decoration-none">
+                    <div class="admin-card text-center p-4 shadow-sm bg-white rounded-4">
+                        <h3 class="display-6 fw-bold text-dark">{{ total_bookings }}</h3>
+                        <p class="text-uppercase small fw-bold mb-0 text-muted">Total Bookings</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

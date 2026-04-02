@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="booking-wrapper"> <h2 class="form-section-title">Update Offer</h2>
+        <p class="form-subtitle">Adjusting discount for <strong>{{ restaurant.name }}</strong></p>
+        
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label class="form-label">New Offer Percentage (%)</label>
+                <div class="input-group">
+                    <input type="number" name="offer" class="form-control" 
+                           value="{{ restaurant.offer }}" min="0" max="100" required>
+                    <span class="input-group-text">%</span>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save me-2"></i>Save Changes
+                </button>
+                <a href="{% url 'offers' %}" class="btn btn-primary" style="background-color: #6c757d !important;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Available Restaurants</h2>
+<form method="GET" action="{% url 'restaurant_list' %}" class="row mb-4 justify-content-center">
+  <div class="col-md-4">
+    <input type="text" name="location" class="form-control" placeholder="Enter location">
+  </div>
+  
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">
+      Search
+    </button>
+  </div>
+
+</form>
+
+<div class="row">
+  {% for r in restaurants %}
+  <div class="col-md-4 mb-4">
+    <div class="card shadow">
+        {% if r.image %}
+        <img src="{{ r.image.url }}" class="card-img-top restaurant-img">
+        {% else %}
+        <img src="{% static 'images/default_restaurant.jpg' %}" class="card-img-top restaurant-img">
+        {% endif %}
+        
+        <div class="card-body">
+          <h5>{{ r.name }}</h5>
+          <p>📍 {{ r.location }}</p>
+          <p>🍽 {{ r.food_type }}</p>
+          
+          {% if r.offer %}
+          <p class="text-success">🔥 {{ r.offer }}% OFF</p>
+          {% endif %}
+          
+          <p>⭐ {{ r.rating|default:"No rating yet" }}</p>
+          <a href="{% url 'restaurant_detail' r.id %}" class="btn btn-success w-100">
+            View Details
+          </a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p class="text-center text-danger">No restaurants available</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

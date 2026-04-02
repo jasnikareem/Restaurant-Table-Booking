@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/edit_restaurant.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold" style="color: #aa0c1c !important; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
+            All Restaurants
+        </h2>
+        
+        <a href="{% url 'add_restaurant' %}" class="btn btn-success px-4" style="width: auto !important; display: inline-flex !important;">
+            <i class="fas fa-plus me-2"></i> Add Restaurant
+        </a>
+    </div>
+    
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle bg-white mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Restaurant Name</th>
+                    <th>Location</th>
+                    <th>Owner</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td class="fw-bold text-primary">{{ restaurant.name }}</td>
+                    <td>{{ restaurant.location }}</td>
+                    <td>{{ restaurant.owner.username }}</td>
+                    <td class="text-center">
+                        
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-sm btn-outline-dark px-3">VIEW</a>
+                            <a href="{% url 'edit_restaurant' restaurant.id %}" class="btn btn-sm btn-primary px-3" style="background-color: #aa0c1c; border: none;">EDIT</a>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-dark dropdown-toggle px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    MANAGE
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0">
+                                    <li><a class="dropdown-item py-2" href="{% url 'manage_tables' restaurant.id %}"><i class="fas fa-table me-2 text-muted"></i>Tables</a></li>
+                                    <li><a class="dropdown-item py-2" href="{% url 'manage_timeslots' restaurant.id %}"><i class="fas fa-clock me-2 text-muted"></i>Slots</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    
+                                    <li>
+                                        <form action="{% url 'delete_restaurant' restaurant.id %}" method="POST" class="px-3 py-1">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-danger w-100" style="font-size: 10px;" onclick="return confirm('Delete this restaurant?')">
+                                                <i class="fas fa-trash-alt me-1"></i>DELETE
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}

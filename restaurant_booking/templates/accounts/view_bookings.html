@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/my_booking.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="booking-wrapper">
+    <div class="booking-container">
+        
+        <h1 class="text-center mb-4">Bookings</h1>
+
+        {% for booking in bookings %}
+        <div class="booking-card">
+            <h5>{{ booking.restaurant.name }}</h5>
+            
+            <p><strong>👤 User:</strong> {{ booking.user.username }}</p>
+            <p><strong>📅 Date:</strong> {{ booking.date }}</p>
+            <p><strong>⏰ Time:</strong> {{ booking.timeslot.start_time }} - {{ booking.timeslot.end_time }}</p>
+            <p><strong>👥 Guests:</strong> {{ booking.guests }}</p>
+            <p><strong>🪑 Table Number:</strong> {{ booking.table.table_number }}</p>
+
+            <div class="mt-2 border-top pt-2">
+                <strong>🍴 Booked Menu:</strong>
+                <ul class="list-unstyled mb-0">
+                    {% for item in booking.menus.all %}
+                        <li class="small text-muted">
+                            <i class="fas fa-check-circle text-success me-1"></i> {{ item.name }}
+                        </li>
+                    {% empty %}
+                        <li class="small text-muted italic">No items selected</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        {% empty %}
+        <p class="text-center text-danger">No bookings found</p>
+        {% endfor %}
+    
+    </div>
+</div>
+{% endblock %}

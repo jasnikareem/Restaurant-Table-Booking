@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="booking-wrapper">
+    <div class="booking-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <h2 class="text-center">Book Your Table</h2>
+        <p class="text-center text-muted small mb-4">Reservation for <strong>{{ restaurant.name }}</strong></p>
+        
+        <form method="POST" id="bookingForm">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select Date</label>
+                <input type="date" name="date" class="form-control" value="{{ selected_date }}" required id="date_picker">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select Time</label>
+                <div class="time-slots">
+                    {% for slot in slots %}
+                    <input type="radio" name="slot" id="slot-{{ slot.id }}" value="{{ slot.id }}" 
+                           {% if selected_slot == slot.id|stringformat:"s" %}checked{% endif %} required>
+                    <label for="slot-{{ slot.id }}">
+                        {{ slot.start_time|time:"g:i A" }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select a Table</label>
+                <div class="row g-2">
+                    {% for table in tables %}
+                    <div class="col-4">
+                        <input type="radio" class="btn-check" name="table" id="table{{ table.id }}" value="{{ table.id }}" data-seats="{{ table.seats }}" required>
+                        <label class="btn btn-outline-success w-100 table-card py-3" for="table{{ table.id }}">
+                            Table {{ table.table_number }} <br>
+                            <small>({{ table.seats }} Seats)</small>
+                        </label>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-4">
+                        <div class="alert alert-info">
+                            <i class="fas fa-calendar-times me-2"></i> 
+                            No tables available for this date and time. Please try a different slot.
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Number of Guests</label>
+                <input type="number" name="guests" id="guest_input" class="form-control" placeholder="How many people?" required min="1">
+                <div id="seat_warning" class="alert alert-warning mt-2 py-2 small" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i> This table only has <span id="capacity_count" class="fw-bold"></span> seats.
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-confirm text-uppercase" id="submit_btn">
+                    Confirm Booking
+                </button>
+                <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-light text-uppercase py-2 fw-bold text-muted border">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Set min date to today
+    const datePicker = document.getElementById('date_picker');
+    if (datePicker) {
+        datePicker.min = new Date().toISOString().split("T")[0];
+    }
+
+    const guestInput = document.getElementById('guest_input');
+    const warningDiv = document.getElementById('seat_warning');
+    const capacitySpan = document.getElementById('capacity_count');
+    const submitBtn = document.getElementById('submit_btn');
+    const tableRadios = document.querySelectorAll('input[name="table"]');
+
+    function validateSeating() {
+        const selectedTable = document.querySelector('input[name="table"]:checked');
+        const requestedGuests = parseInt(guestInput.value) || 0;
+
+        if (selectedTable) {
+            const tableSeats = parseInt(selectedTable.getAttribute('data-seats'));
+            if (requestedGuests > tableSeats) {
+                capacitySpan.textContent = tableSeats;
+                warningDiv.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+            } else {
+                warningDiv.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+        }
+    }
+
+    guestInput.addEventListener('input', validateSeating);
+    tableRadios.forEach(radio => {
+        radio.addEventListener('change', validateSeating);
+    });
+
+    // Auto-refresh when date or slot changes to update available tables
+    const slotRadios = document.querySelectorAll('input[name="slot"]');
+    [datePicker, ...slotRadios].forEach(element => {
+        element.addEventListener('change', () => {
+            const date = datePicker.value;
+            const slot = document.querySelector('input[name="slot"]:checked')?.value;
+            if (date && slot) {
+                window.location.href = `?date=${date}&slot=${slot}`;
+            }
+        });
+    });
+</script>
+{% endblock %}

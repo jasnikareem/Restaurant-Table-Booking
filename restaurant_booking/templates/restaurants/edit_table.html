@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_table.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow border-0 p-4 bg-white text-dark" style="border-radius: 15px; border-top: 5px solid #007bff;">
+                <h4 class="fw-bold mb-1 text-dark">Edit Seating Details</h4>
+                <p class="text-muted small mb-4">Updating: <span class="badge bg-light text-dark border">{{ table.table_number }}</span></p>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase text-dark">Table Identity</label>
+                        <input type="text" name="table_number" class="form-control border-dark text-dark" value="{{ table.table_number }}" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-uppercase text-dark">Max Capacity (Seats)</label>
+                        <input type="number" name="capacity" class="form-control border-dark text-dark" value="{{ table.seats }}" min="1" required>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary fw-bold">Save Changes</button>
+                        <a href="{% url 'manage_tables' restaurant.id %}" class="btn btn-outline-secondary">
+                            Cancel and Return
+                        </a>
+                    
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

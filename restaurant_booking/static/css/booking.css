@@ -1,0 +1,163 @@
+/* =====================================================
+   DINEBUDDY CORE THEME 2026
+   Primary: Deep Red (Branding) | Accent: Success Green
+===================================================== */
+
+:root {
+    /* Color Palette */
+    --brand-red: #c82333;
+    --brand-red-dark: #a01a27;
+    --brand-green: #28a745;
+    --brand-green-hover: #218838;
+    --brand-green-light: #f1fdf4;
+    
+    /* Neutral Colors */
+    --text-dark: #2c3e50;
+    --text-muted: #666;
+    --bg-light: #fcfcfc;
+    --border-color: #dee2e6;
+    
+    /* Effects */
+    --shadow-soft: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ===== GLOBAL WRAPPER ===== */
+/* This ensures your card is centered between the Red Navbar and Dark Footer */
+.booking-wrapper {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* ===== CONTAINERS & CARDS ===== */
+.booking-container {
+    max-width: 650px;
+    width: 100%;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-hover);
+    border-top: 6px solid var(--brand-red);
+    transition: var(--transition-smooth);
+}
+
+/* ===== TYPOGRAPHY ===== */
+h2 {
+    color: var(--brand-red);
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.form-label {
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* ===== TIME SLOTS (CHIPS) ===== */
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.time-slots input[type="radio"] { display: none; }
+
+.time-slots label {
+    padding: 8px 20px;
+    border: 2px solid var(--brand-green);
+    border-radius: 25px;
+    color: var(--brand-green);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: var(--transition-smooth);
+}
+
+.time-slots input[type="radio"]:checked + label {
+    background-color: var(--brand-green);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+/* ===== TABLE CARDS ===== */
+.table-card {
+    cursor: pointer;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 12px;
+    text-align: center;
+    padding: 15px;
+    background: #fff;
+    transition: var(--transition-smooth);
+}
+
+.table-card:hover {
+    border-color: var(--brand-green) !important;
+    background-color: var(--brand-green-light);
+}
+
+.btn-check:checked + .table-card {
+    background-color: var(--brand-green-light) !important;
+    border-color: var(--brand-green) !important;
+    color: #1b5e20 !important;
+    font-weight: 700;
+    transform: translateY(-3px);
+}
+
+/* ===== FORM INPUTS ===== */
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+}
+
+.form-control:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px rgba(170, 12, 28, 0.1);
+    background-color: #fff;
+}
+
+/* ===== BUTTONS ===== */
+.btn-confirm {
+    background-color: var(--brand-green) !important;
+    color: white !important;
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 15px;
+    letter-spacing: 1px;
+    border: none !important;
+    transition: var(--transition-smooth);
+}
+
+.btn-confirm:hover {
+    background-color: var(--brand-green-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-secondary {
+    background-color: #6c757d !important;
+    border-radius: 10px;
+    padding: 12px;
+    color: white !important;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .booking-container {
+        padding: 25px;
+        margin: 20px;
+    }
+}

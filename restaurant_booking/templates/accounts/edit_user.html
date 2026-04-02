@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block title %}Edit User | {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="booking-wrapper mt-5">
+    <div class="booking-container shadow-sm p-4 bg-white rounded" style="max-width: 600px; margin: auto;">
+        
+        <h2 class="text-center mb-4">Edit User Profile</h2>
+        <p class="text-center text-muted small">Update information for <strong>{{ user.username }}</strong></p>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label class="form-label fw-bold">Username</label>
+                <input type="text" name="username" value="{{ user.username }}" class="form-control" required>
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label fw-bold">User Role</label>
+                <select name="role" class="form-control" required>
+                    <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                    <option value="owner" {% if user.role == 'owner' %}selected{% endif %}>Restaurant Owner</option>
+                    <option value="customer" {% if user.role == 'customer' %}selected{% endif %}>Customer</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Location</label>
+                <input type="text" name="location" value="{{ user.location }}" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Email Address</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary text-uppercase fw-bold py-2">
+                    Save Changes
+                </button>
+                <a href="{% url 'manage_users' %}" class="btn btn-light border text-uppercase py-2">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

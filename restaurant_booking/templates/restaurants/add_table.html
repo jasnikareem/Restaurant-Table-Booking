@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_table.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="add-table-container shadow p-4 rounded bg-white" style="max-width: 500px; margin: auto;">
+        <h2 class="text-center text-danger">ADD TABLE</h2>
+        <p class="text-center text-muted">Assign new seating capacity to <strong>{{ restaurant.name }}</strong></p>
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label">Table Number</label>
+                <input type="text" name="table_number" class="form-control" placeholder="e.g. Table 10" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Seats (Capacity)</label>
+                <input type="number" name="capacity" class="form-control" placeholder="e.g. 4" required>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success">SAVE TABLE</button>
+                <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-secondary">CANCEL</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

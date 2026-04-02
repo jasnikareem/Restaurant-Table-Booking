@@ -1,0 +1,112 @@
+/* ===== FULL PAGE BACKGROUND OVERLAY ===== */
+.auth-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* dark overlay over bg image */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== AUTH CARD (GLASS EFFECT) ===== */
+.auth-box,
+.auth-card {
+    width: 350px;
+    padding: 30px;
+
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== HEADINGS ===== */
+.auth-box h2,
+.auth-card h2 {
+    text-align: center;
+    color: #aa0c1c; /* match base red */
+    margin-bottom: 10px;
+}
+
+/* ===== SUBTITLE ===== */
+.auth-subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* ===== INPUT GROUP ===== */
+.input-group {
+    margin-bottom: 15px;
+}
+
+/* ===== INPUTS ===== */
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+    font-size: 14px;
+    background: #fff;
+}
+
+/* ===== INPUT FOCUS ===== */
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #c82333; /* match base */
+}
+
+/* ===== BUTTON ===== */
+.btn-login,
+.login-btn {
+    width: 100%;
+    padding: 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #c82333;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+.btn-login:hover,
+.login-btn:hover {
+    background-color: #a71d2a;
+}
+
+/* ===== FOOTER TEXT ===== */
+.auth-footer {
+    margin-top: 15px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.auth-footer a {
+    color: #c82333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .auth-box,
+    .auth-card {
+        width: 90%;
+        padding: 20px;
+    }
+}

@@ -1,0 +1,197 @@
+/* ==========================================================================
+   1. GLOBAL THEME & HEADERS (Branding)
+   ========================================================================== */
+:root {
+    --brand-red: #aa0c1c;
+    --brand-dark: #1a1a1a;
+    --brand-grey: #6c757d;
+}
+
+h2 {
+    color: var(--brand-red);
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 20px 0;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 25px 0;
+}
+
+/* ==========================================================================
+   2. FORM CONTAINER & ELEMENTS (Create/Edit Pages)
+   ========================================================================== */
+.form-container {
+    max-width: 550px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid var(--brand-red);
+}
+
+.form-label {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #fcfcfc;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px rgba(170, 12, 28, 0.1);
+    outline: none;
+    background-color: #fff;
+}
+
+.img-thumbnail {
+    border: 2px solid #eee;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* ==========================================================================
+   3. TABLE STYLING (Dashboard/Manage Pages)
+   ========================================================================== */
+.table-responsive {
+    border-radius: 15px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    margin-top: 20px;
+    overflow: hidden; /* Ensures the border-radius works */
+}
+
+.table thead.table-dark {
+    background-color: var(--brand-dark) !important;
+}
+
+.table thead th {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 20px 15px;
+    border: none;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #f2f2f2;
+    transition: background 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #fcfcfc !important;
+}
+
+.table td {
+    padding: 18px 15px !important;
+    font-size: 14px;
+    vertical-align: middle;
+    color: #444;
+}
+
+.text-primary {
+    color: var(--brand-red) !important;
+}
+
+/* ==========================================================================
+   4. BUTTONS (Standard & Small)
+   ========================================================================== */
+/* Base button styles */
+.btn {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none !important;
+}
+
+/* Full size buttons for forms */
+.form-container .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* Small buttons for tables */
+.btn-sm {
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    padding: 8px 16px !important;
+}
+
+.btn:hover, .btn-sm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Specific Colors */
+.btn-success { background-color: #28a745 !important; color: white; }
+.btn-primary { background-color: var(--brand-red) !important; color: white; }
+.btn-dark { background-color: var(--brand-dark) !important; color: white; }
+.btn-secondary { background-color: var(--brand-grey) !important; color: white; }
+.btn-outline-dark { border: 2px solid var(--brand-dark) !important; color: var(--brand-dark); background: transparent; }
+
+/* ==========================================================================
+   5. DROPDOWN STYLING
+   ========================================================================== */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.dropdown-item {
+    border-radius: 6px;
+    padding: 8px 15px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: var(--brand-red) !important;
+    color: white !important;
+}
+
+.dropdown-item:hover i {
+    color: white !important;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    h2 { font-size: 1.5rem; }
+    .table thead th { padding: 12px 10px; }
+}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="form-container">
+        <h2 class="text-center mb-4">EDIT MENU ITEM</h2>
+        <p class="text-muted text-center">Editing: <strong>{{ menu.name }}</strong></p>
+        <hr>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Food Name</label>
+                <input type="text" name="name" value="{{ menu.name }}" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Price ₹ </label>
+                <input type="number" step="0.01" name="price" value="{{ menu.price }}" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Category</label>
+                <select name="category" class="form-select" required>
+                    <option value="Breakfast" {% if menu.category == 'Breakfast' %}selected{% endif %}>Breakfast</option>
+                    <option value="Lunch" {% if menu.category == 'Lunch' %}selected{% endif %}>Lunch</option>
+                    <option value="Dinner" {% if menu.category == 'Dinner' %}selected{% endif %}>Dinner</option>
+                    <option value="Snacks" {% if menu.category == 'Snacks' %}selected{% endif %}>Snacks</option>
+                    <option value="Drinks" {% if menu.category == 'Drinks' %}selected{% endif %}>Drinks</option>
+                    <option value="Desserts" {% if menu.category == 'Desserts' %}selected{% endif %}>Desserts</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Current Image</label>
+                {% if menu.image %}
+                    <div class="mb-2">
+                        <img src="{{ menu.image.url }}" alt="current" style="width: 100px; border-radius: 8px;">
+                    </div>
+                {% endif %}
+                <input type="file" name="image" class="form-control" accept="image/*">
+                <small class="text-muted">Leave empty to keep the current image.</small>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success">UPDATE MENU ITEM</button>
+                <a href="{% url 'restaurant_menu' menu.restaurant.id %}" class="btn btn-secondary">
+                    CANCEL & GO BACK
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

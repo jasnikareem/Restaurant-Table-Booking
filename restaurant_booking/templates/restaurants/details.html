@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/restaurant_details.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row g-4 align-items-start mb-5">
+        <div class="col-md-6">
+            {% if restaurant.image %}
+            <img src="{{ restaurant.image.url }}" class="restaurant-img shadow-lg w-100 rounded">
+            {% else %}
+            <img src="{% static 'images/default_restaurant.jpg' %}" class="restaurant-img shadow-lg w-100 rounded">
+            {% endif %}
+        </div>
+        
+        <div class="col-md-6">
+            <div class="glass-card p-4 shadow-sm border">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h1 class="display-6 fw-bold mb-1">{{ restaurant.name }}</h1>
+                        <p class="text-muted fs-5"><i class="fas fa-map-marker-alt text-danger"></i> {{ restaurant.location }}</p>
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <span class="badge bg-warning text-dark px-3 py-2 fs-6">
+                                <i class="fas fa-star"></i> {{ avg_rating|floatformat:1 }}
+                            </span>
+                            <span class="text-muted small">({{ ratings|length }} reviews)</span>
+                        </div>
+                    </div>
+                    
+                    {% if is_owner or request.user.role == 'admin' %}
+                    <div class="text-end">
+                        <span class="badge bg-dark admin-badge mb-3">
+                            {% if request.user.role == 'admin' %}Admin View{% else %}Owner View{% endif %}
+                        </span>
+                        
+                        <div class="d-flex flex-column gap-2">
+                            {% if restaurant.offer > 0 %}
+                            <div class="btn-group shadow-sm">
+                                <a href="{% url 'edit_offer' restaurant.id %}" class="btn btn-warning btn-sm fw-bold">
+                                    <i class="fas fa-edit"></i> EDIT OFFER
+                                </a>
+                                <a href="{% url 'delete_offer' restaurant.id %}" 
+                                class="btn btn-danger btn-sm" 
+                                onclick="return confirm('Are you sure you want to delete this offer?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'add_offer' restaurant.id %}" class="btn btn-outline-success btn-sm fw-bold shadow-sm">
+                            <i class="fas fa-plus-circle"></i> ADD OFFER
+                        </a>
+                        
+                        {% endif %}
+                        <hr class="my-2 border-secondary">
+                        <a href="{% url 'add_menu' restaurant.id %}" class="btn btn-success btn-sm fw-bold shadow-sm">ADD MENU</a>
+                        <a href="{% url 'add_timeslot' restaurant.id %}" class="btn btn-outline-dark btn-sm fw-bold shadow-sm">ADD TIME SLOT</a>
+                    </div>
+                </div>
+                
+                {% endif %}
+            </div>
+            
+            {% if restaurant.offer > 0 %}
+            <div class="card detail-offer-card mb-4 shadow-sm">
+                <div class="card-body py-3">
+                    <h4 class="fw-bold mb-0 text-dark">{{ restaurant.offer }}% OFF on total bill</h4>
+                </div>
+            </div>
+            
+            {% endif %}
+            <hr class="my-4"> 
+            <div class="row mb-4">
+                <div class="col-6 border-end">
+                    <p class="text-muted small text-uppercase mb-1">Cuisine Type</p>
+                    <p class="fw-bold fs-5 mb-0">{{ restaurant.food_type }}</p>
+                </div>
+                <div class="col-6 ps-4">
+                    <p class="text-muted small text-uppercase mb-1">Available Slots</p>
+                    <div class="d-flex flex-wrap gap-1">
+                        {% for slot in slots %}
+                        <span class="badge bg-light border text-dark">{{ slot.start_time|time:"g:i A" }}</span>
+                        
+                        {% endfor %}
+                    
+                    </div>
+                </div>
+            </div>
+            
+            {% if not is_owner %}
+            <div class="d-grid gap-2">
+                <a href="{% url 'book_table' restaurant.id %}" class="btn btn-danger py-3 shadow fs-5 fw-bold text-uppercase">Reserve a Table</a>
+            </div>
+            
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 pt-4 border-top">
+        <h3 class="section-title fw-bold text-uppercase m-0">Explore Menu</h3> 
+        {% if is_owner %}
+        <a href="{% url 'restaurant_menu' restaurant.id %}" class="btn btn-sm btn-outline-primary fw-bold">
+            <i class="fas fa-edit me-1"></i> EDIT MENU
+        </a>
+        {% endif %}
+    </div>
+    
+    <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0" id="category-filters">
+        <button class="filter-btn active" data-filter="all">All Items</button>
+        <button class="filter-btn" data-filter="Breakfast">Breakfast</button>
+        <button class="filter-btn" data-filter="Lunch">Lunch</button>
+        <button class="filter-btn" data-filter="Dinner">Dinner</button>
+        <button class="filter-btn" data-filter="Lunch">Snacks</button>
+        <button class="filter-btn" data-filter="Dinner">Drinks</button>
+        <button class="filter-btn" data-filter="Lunch">Desserts</button>
+    </div>
+    
+    <div class="row g-4" id="menu-grid">
+        {% for m in restaurant.menu_set.all %}
+        <div class="col-6 col-md-4 col-lg-3 menu-item" data-category="{{ m.category }}">
+            <div class="card h-100 shadow-sm border-0 glass-card text-center p-2">
+                {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top rounded" style="height:160px; object-fit:cover;">{% endif %}
+                <div class="card-body">
+                    <h6 class="fw-bold mb-1">{{ m.name }}</h6>
+                    <p class="text-danger fw-bold m-0 fs-5">₹{{ m.price }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <input type="checkbox" id="toggle-review" class="d-none">
+    
+    <div class="d-flex justify-content-between align-items-center mt-5 mb-4 pt-4 border-top">
+        <h3 class="section-title fw-bold text-uppercase m-0">Guest Reviews</h3>
+        {% if user.is_authenticated and not is_owner %}
+        <label for="toggle-review" class="btn btn-outline-danger btn-sm fw-bold mb-0">
+            <i class="fas fa-pen-fancy me-1"></i> SHARE FEEDBACK
+        </label>
+        {% endif %}
+    </div>
+    
+    {% if user.is_authenticated and not is_owner %}
+    <div class="review-form-wrapper">
+        <div class="p-4 border rounded bg-white shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold m-0 text-dark">Write a Review</h4>
+                <label for="toggle-review" class="btn-close" aria-label="Close"></label>
+            </div>
+            
+            <form action="{% url 'add_review' restaurant.id %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="form-label d-block fw-bold text-dark">Rating</label>
+                    <div class="star-rating">
+                        <input type="radio" name="rating" value="5" id="5-stars"><label for="5-stars" class="fas fa-star"></label>
+                        <input type="radio" name="rating" value="4" id="4-stars"><label for="4-stars" class="fas fa-star"></label>
+                        <input type="radio" name="rating" value="3" id="3-stars"><label for="3-stars" class="fas fa-star"></label>
+                        <input type="radio" name="rating" value="2" id="2-stars"><label for="2-stars" class="fas fa-star"></label>
+                        <input type="radio" name="rating" value="1" id="1-stars" required><label for="1-stars" class="fas fa-star"></label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="reviewComment" class="form-label fw-bold text-dark">Comment</label>
+                    <textarea name="comment" id="reviewComment" class="form-control" rows="4" placeholder="Share your experience..." required></textarea>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">Submit Review</button>
+                    <label for="toggle-review" class="btn btn-outline-secondary">Cancel</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        {% for r in ratings %}
+        <div class="col-12 mb-3">
+            <div class="card p-3 shadow-sm">
+                <div class="d-flex justify-content-between">
+                    <h6 class="fw-bold">{{ r.user.username }}</h6>
+                    <span class="text-warning">
+                        {% for i in "12345" %}
+                            <i class="{% if forloop.counter <= r.rating %}fas{% else %}far{% endif %} fa-star"></i>
+                        {% endfor %}
+                    </span>
+                </div>
+                <p class="mb-0 text-muted">{{ r.review }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No reviews yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const menuItems = document.querySelectorAll('.menu-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 1. Remove 'active' class from all buttons and add to clicked one
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filterValue = button.getAttribute('data-filter');
+
+            // 2. Filter the menu items
+            menuItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

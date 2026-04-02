@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="booking-wrapper mt-5">
+    <div class="booking-container shadow-sm p-4 bg-white rounded">
+        <h2 class="text-center mb-4">Edit Your Reservation</h2>
+        <p class="text-center text-muted small">Update details for <strong>{{ restaurant.name }}</strong></p>
+
+        <form method="POST" id="editBookingForm">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Update Date</label>
+                <input type="date" name="date" class="form-control" 
+                       value="{{ booking.date|date:'Y-m-d' }}" required id="date_picker">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Update Time</label>
+                <div class="time-slots d-flex flex-wrap gap-2">
+                    {% for slot in slots %}
+                    <input type="radio" name="timeslot" id="slot-{{ slot.id }}" value="{{ slot.id }}" 
+                           {% if booking.timeslot.id == slot.id %}checked{% endif %} required>
+                    <label class="btn btn-outline-primary" for="slot-{{ slot.id }}">
+                        {{ slot.start_time|time:"g:i A" }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select a Different Table</label>
+                <div class="row g-2">
+                    {% for table in tables %}
+                    <div class="col-4">
+                        <input type="radio" class="btn-check" name="table" id="table{{ table.id }}" 
+                               value="{{ table.id }}" {% if booking.table.id == table.id %}checked{% endif %} required>
+                        <label class="btn btn-outline-success w-100 py-3" for="table{{ table.id }}">
+                            Table {{ table.table_number }} <br>
+                            <small>({{ table.seats }} Seats)</small>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Number of Guests</label>
+                <input type="number" name="guests" class="form-control" 
+                       value="{{ booking.guests }}" required min="1">
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary text-uppercase fw-bold py-2">
+                    Update Reservation
+                </button>
+                <a href="{% url 'view_bookings' %}" class="btn btn-light border text-uppercase py-2">
+                    Go Back
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Ensure they can't pick a past date
+    const datePicker = document.getElementById('date_picker');
+    if (datePicker) {
+        datePicker.min = new Date().toISOString().split("T")[0];
+    }
+</script>
+{% endblock %}

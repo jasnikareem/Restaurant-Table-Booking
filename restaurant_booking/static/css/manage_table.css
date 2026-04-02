@@ -1,0 +1,76 @@
+
+    /* 1. Body Background with Overlay */
+    body {
+        /* This adds a dark tint to your background image so white cards pop out */
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                    url('{% static "images/your_background.jpg" %}') no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+    }
+
+    /* 2. Solid White Cards */
+    .readable-card {
+        background-color: #ffffff !important; /* Solid white - no transparency */
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* Strong shadow for depth */
+        color: #1a1a1a !important; /* Deep black text */
+        overflow: hidden;
+    }
+
+    /* 3. Text Contrast */
+    .readable-card h4, 
+    .readable-card h5, 
+    .readable-card label,
+    .readable-card th {
+        color: #000000 !important;
+        font-weight: 700 !important;
+    }
+
+    .readable-card .text-muted {
+        color: #555555 !important; /* Darker grey for secondary text */
+    }
+
+    /* 4. Form Styling */
+    .form-control {
+        border: 2px solid #dee2e6 !important;
+        color: #000 !important;
+        padding: 12px;
+    }
+
+    .form-control:focus {
+        border-color: var(--brand-red) !important;
+        box-shadow: none;
+    }
+
+    /* 5. Table Styling */
+    .table {
+        color: #1a1a1a !important;
+        margin-bottom: 0;
+    }
+    
+    .table thead {
+        background-color: #f8f9fa;
+    }
+
+    .border-brand-red {
+        border-top: 5px solid #a60c1c !important;
+    }
+
+    /* 1. Ensure the icons and text are visible in the outline state */
+.btn-outline-primary {
+    color: #007bff !important; /* Blue text/icon */
+    background-color: #ffffff !important; /* Solid white background */
+    border: 1px solid #007bff !important;
+}
+
+.btn-outline-danger {
+    color: #dc3545 !important; /* Red text/icon */
+    background-color: #ffffff !important; /* Solid white background */
+    border: 1px solid #dc3545 !important;
+}
+
+/* 2. Change text to white ONLY when hovering */
+.btn-outline-primary:hover, .btn-outline-danger:hover {
+    color: #ffffff !important;
+}

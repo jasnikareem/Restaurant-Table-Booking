@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_restaurant.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="registration-wrapper">
+    <div class="container d-flex justify-content-center">
+        <div class="registration-box">
+            <div class="text-center mb-4">
+                <h2 class="form-section-title mb-1">REGISTER RESTAURANT</h2>
+                <p class="italic text-muted small">
+                    {% if user.role == 'admin' %}
+                        Admin Portal: Expanding the Pickit Network
+                    {% else %}
+                        Partner Portal: Start your journey with us
+                    {% endif %}
+                </p>
+            </div>
+            
+            <hr class="mb-4 opacity-10">
+
+            <form method="POST" enctype="multipart/form-data"> 
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Assign Restaurant Owner</label>
+                    {% if user.role == 'admin' %}
+                        <select name="owner" class="form-select" required>
+                            <option value="" selected disabled>-- Select an Owner Account --</option>
+                            {% for owner in all_owners %}
+                                <option value="{{ owner.id }}">{{ owner.username }} ({{ owner.email }})</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <div class="p-3 border rounded bg-light d-flex align-items-center">
+                            <i class="fas fa-user-circle fa-lg text-success me-2"></i>
+                            <div>
+                                <span class="d-block fw-bold text-dark">{{ user.username }}</span>
+                                <input type="hidden" name="owner" value="{{ user.id }}">
+                                <small class="text-muted">Registering listing under your profile</small>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Restaurant Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g. Arabian Majlis" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Location</label>
+                    <div class="input-group">
+                       
+                        <input type="text" name="location" class="form-control border-start-0" placeholder="City or Area" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-7 mb-3">
+                        <label class="form-label">Cuisine / Food Type</label>
+                        <input type="text" name="food_type" class="form-control" placeholder="e.g. Indian, Chinese" required>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">Active Offer (%)</label>
+                        <div class="input-group">
+                            <input type="number" name="offer" class="form-control" value="0" min="0" max="100">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Cover Image</label>
+                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <div class="form-text text-muted">A high-quality image helps attract more bookings.</div>
+                </div>
+
+                <div class="d-grid gap-2 pt-2">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check-circle me-2"></i> COMPLETE REGISTRATION
+                    </button>
+                    <a href="{% url 'restaurant_dashboard' %}" class="btn btn-outline-secondary py-2 border-0 small text-decoration-none">
+                        <i class="fas fa-arrow-left me-1"></i> Cancel & Return
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

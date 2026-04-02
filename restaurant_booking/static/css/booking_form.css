@@ -1,0 +1,147 @@
+/* ===== PAGE WRAPPER ===== */
+.success-wrapper, .booking-form-wrapper {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background: #f4f4f4; /* Light neutral background */
+}
+
+/* ===== CONTAINER (GLASS EFFECT CARD) ===== */
+.success-card, .container.mt-5 {
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.success-card:hover, .container.mt-5:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== HEADINGS ===== */
+h2 {
+    font-weight: 700;
+    color: #aa0c1c; /* Signature Deep Red */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+/* ===== DJANGO FORM ELEMENTS ===== */
+form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+form label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-control, form input, form select, form textarea {
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.form-control:focus, form input:focus {
+    border-color: #c82333;
+    box-shadow: 0 0 0 3px rgba(200, 35, 51, 0.1);
+    outline: none;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary, .btn-danger, .btn-success {
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 25px;
+    text-transform: uppercase;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* Red Theme Buttons */
+.btn-primary, .btn-success {
+    background-color: #c82333 !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    background-color: #a71d2a !important;
+}
+
+/* ===== TABLE DESIGN (For Booking Lists) ===== */
+.table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table thead {
+    background: linear-gradient(45deg, #111111, #c82333);
+    color: #fff;
+}
+
+.table td, .table th {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+}
+
+/* ===== SUCCESS PAGE SPECIALS (Checkmark & Details) ===== */
+.booking-details {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+    border: 1px solid #eee;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child { border-bottom: none; }
+
+/* Animated Checkmark CSS */
+.checkmark-container { width: 80px; height: 80px; position: relative; margin: 0 auto 20px; }
+.checkmark-circle { 
+    width: 80px; height: 80px; border-radius: 50%; background-color: #28a745; 
+    animation: scaleIn 0.4s ease-out forwards; 
+}
+.checkmark-stem, .checkmark-kick { position: absolute; background-color: #fff; border-radius: 2px; }
+.checkmark-stem { width: 4px; height: 28px; left: 46px; top: 24px; transform: rotate(45deg); }
+.checkmark-kick { width: 18px; height: 4px; left: 28px; top: 46px; transform: rotate(45deg); }
+
+@keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .container.mt-5, .success-card {
+        padding: 20px;
+        margin: 10px;
+    }
+}

@@ -1,0 +1,206 @@
+/* ===== 1. BRAND COLORS & VARIABLES ===== */
+:root {
+    --brand-red: #aa0c1c;         /* Signature Deep Red */
+    --brand-red-hover: #850a16;
+    --brand-green: #198754;       /* Standard Success Green */
+    --brand-green-hover: #157347;
+    --glass-white: rgba(255, 255, 255, 0.95);
+    --shadow-deep: 0 10px 30px rgba(0, 0, 0, 0.15);
+    --shadow-light: 0 4px 10px rgba(0,0,0,0.04);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ===== 2. GLOBAL BASE STYLES ===== */
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+.container, .card, .btn, .filter-btn, .form-control, .restaurant-img, .form-select {
+    transition: var(--transition-smooth);
+}
+
+/* Page load animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* ===== 3. TYPOGRAPHY & TITLES ===== */
+h2, .section-title, .form-section-title {
+    color: var(--brand-red);
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 20px 0 10px 0;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+/* ===== 4. CARDS & CONTAINERS ===== */
+.card, .form-container, .booking-wrapper {
+    background: var(--glass-white);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: none;
+    box-shadow: var(--shadow-deep);
+    overflow: hidden;
+}
+
+.form-container, .booking-wrapper {
+    max-width: 550px;
+    margin: 50px auto;
+    padding: 35px;
+    border-top: 6px solid var(--brand-red);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* ===== 5. FORM ELEMENTS ===== */
+.form-label {
+    font-weight: 700;
+    color: #495057;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control, .form-select {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #fcfcfc;
+    border: 1px solid #dee2e6;
+    box-sizing: border-box;
+}
+
+/* Focus States - Uses Green for success-themed forms, Red for general */
+.form-control:focus, .form-select:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: var(--brand-green);
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+}
+
+.input-group-text {
+    background-color: #f1f3f5;
+    border-radius: 0 8px 8px 0;
+    font-weight: bold;
+    color: var(--brand-green);
+}
+
+/* ===== 6. BUTTONS ===== */
+.btn {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    cursor: pointer;
+}
+
+/* Full width buttons inside form containers */
+.form-container .btn-success, 
+.form-container .btn-primary {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Success/Green Style */
+.btn-success {
+    background-color: var(--brand-green) !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background-color: var(--brand-green-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+}
+
+/* Red/Primary Style */
+.btn-danger, .btn-primary {
+    background-color: var(--brand-red) !important;
+    color: white !important;
+}
+
+.btn-danger:hover, .btn-primary:hover {
+    background-color: var(--brand-red-hover) !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white !important;
+}
+
+/* ===== 7. TABLES & IMAGES ===== */
+.table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+.table thead {
+    background: linear-gradient(135deg, #212529 0%, var(--brand-red) 100%);
+    color: #fff;
+}
+
+/* Fix for buttons inside tables */
+.table .btn, .btn-sm {
+    display: inline-flex !important;
+    width: auto !important;
+    padding: 6px 12px !important;
+    font-size: 0.8rem;
+    vertical-align: middle;
+}
+
+.restaurant-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+/* ===== 8. RESPONSIVE FIXES ===== */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    .restaurant-img { height: 200px; }
+    h2 { font-size: 1.5rem; }
+}

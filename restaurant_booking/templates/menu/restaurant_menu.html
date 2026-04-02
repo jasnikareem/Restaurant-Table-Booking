@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <small class="text-muted">Logged in as: {{ request.user.username }} | Role: {{ request.user.role }} | is_owner: {{ is_owner }}</small>
+
+    <h2 class="text-center mb-4">{{ restaurant.name }} Menu</h2>
+    
+    {% if is_owner %}
+    <div class="d-flex justify-content-end gap-2 mb-4">
+        <a href="{% url 'add_menu' restaurant.id %}" class="btn btn-success rounded-pill px-3 shadow-sm">
+            <i class="bi bi-plus-lg"></i> Add Menu
+        </a>
+        
+     
+    </div>
+    {% endif %}
+    
+    <div class="row">
+
+        {% for m in menus %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if m.image %}
+                <img src="{{ m.image.url }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+            {% endif %}
+            
+            <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">{{ m.name }}</h5>
+                <p class="text-danger fw-bold mb-1">₹{{ m.price }}</p>
+                <p class="text-muted small mb-3">{{ m.category }}</p>
+                
+                {% if is_owner %}
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'edit_menu' m.id %}" class="btn btn-warning btn-sm flex-fill">EDIT</a>
+                    <a href="{% url 'delete_menu' m.id %}" class="btn btn-danger btn-sm flex-fill">DELETE</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-center">No menu items added.</p>
+{% endfor %}
+
+{% endblock %}
+       

@@ -1,0 +1,145 @@
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden; /* Prevents horizontal scroll from the scaled background */
+}
+
+/* ===== BLURRED BACKGROUND LAYER ===== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Background Image */
+    background: url('/static/images/bg.jpg') no-repeat center center;
+    background-size: cover;
+    
+    /* Filter effects: Blur and Brightness (Darkens slightly) */
+    filter: blur(8px) brightness(0.7); 
+    
+    /* Scale up slightly to hide the blurred white edges */
+    transform: scale(1.1); 
+    z-index: -1; 
+}
+
+/* ===== NAVIGATION ===== */
+.navbar {
+    background: linear-gradient(45deg, #111111, #c82333) !important;
+    padding: 12px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 22px;
+    color: #fff !important;
+}
+
+.nav-link {
+    font-size: 15px;
+    margin-left: 10px;
+    color: rgba(255,255,255,0.8) !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+    transform: scale(1.05);
+}
+
+/* ===== MAIN CONTENT LAYOUT ===== */
+main {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    min-height: calc(100vh - 160px); /* Keeps footer at bottom on short pages */
+}
+
+h2 {
+    font-weight: 700;
+    color: #aa0c1c;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+}
+
+/* ===== UI COMPONENTS (Cards & Forms) ===== */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background-color: rgba(250, 247, 247, 0.95); /* Slight transparency */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.form-control:focus {
+    border-color: #c82333;
+    box-shadow: 0 0 0 0.2rem rgba(200, 35, 51, 0.25);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #bb2d3b;
+    box-shadow: 0 4px 8px rgba(187, 45, 59, 0.4);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(45deg, #111111, #c82333) !important;
+    color: #fff;
+    padding: 20px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 768px) {
+    .navbar-brand { font-size: 18px; }
+    h2 { font-size: 24px; }
+    .card:hover { transform: none; } /* Better for mobile touch */
+}

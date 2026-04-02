@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="success-wrapper">
+    <div class="success-card shadow">
+        <div class="checkmark-container">
+            <div class="checkmark-circle"></div>
+            <div class="checkmark-stem"></div>
+            <div class="checkmark-kick"></div>
+        </div>
+
+        <h2 class="mt-4">Booking Successful!</h2>
+        <p class="text-muted">Your table at <strong>{{ restaurant.name }}</strong> is reserved.</p>
+
+        <div class="booking-details">
+            <div class="detail-item">
+                <span>📅 Date:</span>
+                <strong>{{ booking.date }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>⏰ Time:</span>
+                <strong>{{ booking.slot.start_time }}</strong>
+            </div>
+            
+            <div class="detail-item">
+                <span>👥 Guests:</span>
+                <strong>{{ booking.guests }} People</strong>
+            </div>
+        </div>
+
+        <div class="actions mt-4">
+            <a href="{% url 'restaurant_list' %}" class="btn btn-outline-dark">Explore More</a>
+            <a href="{% url 'view_bookings' %}" class="btn btn-danger">View My Bookings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

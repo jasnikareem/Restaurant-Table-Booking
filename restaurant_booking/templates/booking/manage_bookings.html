@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/my_booking.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="fw-bold mb-4" style="color: var(--brand-red, #a60c1c); text-align: left; text-transform: none; letter-spacing: normal;">My Bookings</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-light">
+                        <tr class="text-secondary small text-uppercase">
+                            <th class="py-3 px-4">Restaurant</th>
+                            <th class="py-3">Date</th>
+                            <th class="py-3">Time</th>
+                            <th class="py-3">Guests</th>
+                            <th class="py-3">Status</th>
+                            <th class="py-3 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td class="py-3 px-4 fw-semibold text-dark">{{ booking.restaurant.name }}</td>
+                            
+                            <td class="py-3 text-muted">{{ booking.date|date:"F d, Y" }}</td>
+                            
+                            <td class="py-3 text-muted">
+                                {{ booking.timeslot.start_time|time:"g:i a" }}
+                            </td>
+                            
+                            <td class="py-3 text-muted">{{ booking.guests }}</td>
+                            
+                            <td class="py-3">
+                                <span class="text-warning fw-bold">Confirmed</span>
+                            </td>
+                            
+                            <td class="py-3 text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{% url 'edit_booking' booking.id %}" class="btn btn-outline-dark btn-edit-sm">
+                                        <i class="fas fa-edit me-1"></i> Edit
+                                    </a>
+                                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm px-3 shadow-sm" style="background-color: #dc3545; border: none; font-size: 0.8rem; border-radius: 4px;">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fas fa-calendar-times fa-3x mb-3 d-block opacity-25"></i>
+                                No bookings found. <a href="{% url 'restaurant_list' %}" class="text-danger fw-bold text-decoration-none">Book Now</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

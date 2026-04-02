@@ -1,0 +1,156 @@
+/* ===== 1. ROOT BRAND COLORS & VARIABLES ===== */
+:root {
+    --brand-red: #c82333;
+    --brand-red-dark: #a71d2a;
+    --brand-green: #30af1d;
+    --brand-green-hover: #5aae4b;
+    --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-soft: 0px 10px 30px rgba(0, 0, 0, 0.08);
+    --input-focus: rgba(200, 35, 51, 0.15);
+    --transition-standard: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ===== 2. PAGE WRAPPER (Background Layer) ===== */
+.registration-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    /* Using your Dashboard Background style */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('/static/images/your-dashboard-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ===== 3. MAIN REGISTRATION BOX (The Card) ===== */
+.registration-box {
+    background: rgba(255, 255, 255, 0.95); /* Glass effect */
+    padding: 40px 50px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px; 
+    border-top: 8px solid var(--brand-red);
+    box-shadow: var(--shadow-glass);
+    transition: var(--transition-standard);
+}
+
+.registration-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== 4. TEXT & TITLES ===== */
+.form-section-title {
+    color: var(--brand-red);
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 1.6rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.italic.text-muted {
+    font-style: italic;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* ===== 5. INPUTS, SELECTS & LABELS ===== */
+.form-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.form-control, .form-select, .input-group-text {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 18px;
+    background-color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 4px var(--input-focus);
+    outline: none;
+}
+
+/* Merging the icon and input look for Location */
+.input-group .form-control {
+    border-left: none;
+}
+
+/* ===== 6. SPECIAL FORM ELEMENTS ===== */
+
+/* File Upload */
+input[type="file"]::file-selector-button {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--brand-red);
+}
+
+/* Owner Info Box (Non-Admin View) */
+.registration-box .bg-light {
+    background-color: #fcfcfc !important;
+    border: 2px dashed #eee !important;
+    border-radius: 12px;
+}
+
+/* ===== 7. ACTION BUTTONS ===== */
+.btn-success {
+    background-color: var(--brand-green);
+    border: none;
+    padding: 14px;
+    font-weight: 800;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: var(--brand-green-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(48, 175, 29, 0.4);
+}
+
+.btn-outline-secondary {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    background: none;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-outline-secondary:hover {
+    color: var(--brand-red);
+}
+
+/* ===== 8. RESPONSIVE FIXES ===== */
+@media (max-width: 768px) {
+    .registration-box {
+        padding: 30px 25px;
+        margin: 0 15px;
+        border-radius: 15px;
+    }
+}

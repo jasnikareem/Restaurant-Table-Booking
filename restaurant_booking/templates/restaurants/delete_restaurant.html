@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="form-container border-danger shadow-lg">
+        <h2 class="text-center mb-4" style="color: #dc3545;">DELETE RESTAURANT</h2>
+        
+        <div class="alert alert-danger text-center">
+            <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+            <p class="mb-0">Are you sure you want to delete <strong>{{ restaurant.name }}</strong>?</p>
+            <small>This action will permanently remove all menu items and reviews.</small>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-danger">
+                    YES, DELETE PERMANENTLY
+                </button>
+                <a href="{% url 'restaurant_menu' restaurant.id %}" class="btn btn-secondary">
+                    NO, CANCEL & GO BACK
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

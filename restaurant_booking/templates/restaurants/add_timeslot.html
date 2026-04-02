@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_table.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="timeslot-container">
+        <h2>Add Time Slot</h2>
+        <p class="form-subtitle text-center text-muted mb-4">Define operating hours for <strong>{{ restaurant.name }}</strong></p>
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="time-input-group mb-4">
+                <div>
+                    <label class="form-label"><i class="fas fa-hourglass-start me-2"></i>Start Time</label>
+                    <input type="time" name="start_time" class="form-control" required>
+                    <div class="form-text">e.g., 12:00 PM</div>
+                </div>
+
+                <div>
+                    <label class="form-label"><i class="fas fa-hourglass-end me-2"></i>End Time</label>
+                    <input type="time" name="end_time" class="form-control" required>
+                    <div class="form-text">e.g., 03:00 PM</div>
+                </div>
+            </div>
+
+            <div class="alert alert-info py-2" style="font-size: 13px;">
+                <i class="fas fa-info-circle me-1"></i> Slots help customers know when they can book a table.
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success">
+                    SAVE TIME SLOT
+                </button>
+                <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-secondary">
+                    CANCEL
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/edit_restaurant.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Edit Restaurant</h2>
+    <p class="form-subtitle">Updating details for: {{ restaurant.name }}</p>
+    <hr>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">Restaurant Name</label>
+            <input type="text" name="name" class="form-control" value="{{ restaurant.name }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-control" value="{{ restaurant.location }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Food Type</label>
+            <input type="text" name="food_type" class="form-control" value="{{ restaurant.food_type }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Offer Details</label>
+            <input type="text" name="offer" class="form-control" value="{{ restaurant.offer }}">
+        </div>
+
+        <div class="mb-3 text-center">
+            <label class="form-label d-block text-start">Current Image</label>
+            {% if restaurant.image %}
+                <div class="mb-3">
+                    <img src="{{ restaurant.image.url }}" class="img-thumbnail" style="max-width: 200px; border-radius: 10px;">
+                </div>
+            {% endif %}
+            <input type="file" name="image" class="form-control">
+            <p class="form-subtitle" style="margin-top: 5px; margin-bottom: 0;">Leave empty to keep current image</p>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-save me-1"></i> Update Restaurant
+        </button>
+        
+        <a href="{% url 'manage_restaurants' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

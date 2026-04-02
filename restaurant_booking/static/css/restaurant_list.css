@@ -1,0 +1,74 @@
+/* ===== SEARCH BAR STYLING ===== */
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+.form-control:focus {
+    border-color: #c82333;
+    box-shadow: 0 0 5px rgba(200, 35, 51, 0.2);
+}
+
+.btn-primary {
+    background-color: #c82333;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #a71d2a;
+}
+
+/* ===== RESTAURANT CARDS ===== */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden; /* Keeps the image corners rounded */
+    transition: 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    margin-bottom: 30px;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15) !important;
+}
+
+.restaurant-img {
+    height: 200px;
+    object-fit: cover; /* Prevents image stretching */
+    width: 100%;
+}
+
+.card-body h5 {
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.card-body p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* ===== BUTTONS ===== */
+.btn-success {
+    background-color: #111; /* Dark button like your dashboard */
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #c82333; /* Turns red on hover */
+    color: white;
+}
+

@@ -1,0 +1,217 @@
+
+
+:root {
+    /* Color Palette */
+    --brand-red: #aa0c1c;
+    --brand-red-dark: #800915;
+    --brand-green: #28a745;
+    --brand-green-hover: #218838;
+    --brand-green-light: #f1fdf4;
+    
+    /* Neutral Colors */
+    --text-dark: #2c3e50;
+    --text-muted: #666;
+    --bg-light: #fcfcfc;
+    --border-color: #dee2e6;
+    
+    /* Effects */
+    --shadow-soft: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ===== 1. GLOBAL TYPOGRAPHY ===== */
+h2 {
+    color: var(--brand-red);
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 30px 0 10px 0;
+    padding-bottom: 10px;
+}
+
+.form-subtitle, .text-muted.text-center {
+    text-align: center;
+    color: var(--text-muted) !important;
+    font-size: 14px;
+    margin-bottom: 25px;
+    font-style: italic;
+    display: block;
+}
+
+/* ===== 2. CONTAINERS & CARDS ===== */
+.form-container, 
+.add-table-container, 
+.container.mt-4, 
+.container.mt-5 > .form-container {
+    max-width: 550px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-soft);
+    border-top: 6px solid var(--brand-red);
+}
+
+.card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: var(--transition-smooth);
+    background: #fff;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-hover) !important;
+}
+
+.card-img-top {
+    height: 190px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-weight: 700;
+    color: var(--brand-red);
+}
+
+/* ===== 3. MENU SELECTION INTERACTION (Customer Side) ===== */
+.menu-selection-card {
+    cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+/* Visual feedback when the checkbox is checked via JS toggle */
+.menu-selection-card.selected {
+    border-color: var(--brand-green);
+    background-color: var(--brand-green-light);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(40, 167, 69, 0.15) !important;
+}
+
+.menu-checkbox {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transform: scale(1.4);
+    accent-color: var(--brand-green);
+    z-index: 5;
+}
+
+.price-tag {
+    font-weight: 800;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+/* ===== 4. FORM ELEMENTS ===== */
+.form-label {
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 12px;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px rgba(170, 12, 28, 0.1);
+    outline: none;
+    background-color: #fff;
+}
+
+/* ===== 5. BUTTONS ===== */
+.btn {
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 14px;
+    letter-spacing: 0.8px;
+    transition: var(--transition-smooth);
+    border: none !important;
+    width: 100%;
+}
+
+.btn-success {
+    background-color: var(--brand-green) !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background-color: var(--brand-green-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+}
+
+.btn-danger:hover {
+    background-color: var(--brand-red) !important;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #6c757d !important;
+    margin-top: 10px;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* ===== 6. FILTER CHIPS ===== */
+#category-filters {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 15px 5px;
+    scrollbar-width: none;
+}
+#category-filters::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+    border-radius: 25px;
+    padding: 8px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    background: white;
+    color: #555;
+    white-space: nowrap;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    border-color: var(--brand-red);
+    color: var(--brand-red);
+}
+
+.filter-btn.active {
+    background-color: #333 !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ===== 7. RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .form-container, .add-table-container {
+        margin: 15px;
+        padding: 20px;
+    }
+    h2 { font-size: 1.4rem; }
+    .btn { padding: 12px; font-size: 0.9rem; }
+}

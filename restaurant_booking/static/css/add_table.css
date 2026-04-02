@@ -1,0 +1,137 @@
+/* ===== 1. GLOBAL THEME & HEADERS ===== */
+h2 {
+    color: #aa0c1c; /* Signature Deep Red */
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 30px 0 10px 0;
+}
+
+.form-section-title {
+    color: #aa0c1c;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+/* ===== 2. CONTAINERS (The "Glass" Box) ===== */
+/* Combined all specific containers into one standard class */
+.booking-wrapper, 
+.add-table-container, 
+.form-container, 
+.timeslot-container {
+    max-width: 550px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #aa0c1c; /* Consistent Branding Red */
+}
+
+/* ===== 3. FORM ELEMENTS ===== */
+.form-label {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control, .form-select {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #fcfcfc;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-sizing: border-box; 
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #aa0c1c;
+    box-shadow: 0 0 0 3px rgba(170, 12, 28, 0.1);
+    outline: none;
+    background-color: #fff;
+}
+
+/* Layout for Start/End time inputs */
+.time-input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ===== 4. BUTTONS (Unified Styles) ===== */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* Success/Activate Action */
+.btn-success {
+    background-color: #28a745 !important; 
+    color: #ffffff !important;
+    margin-top: 20px;
+}
+
+.btn-success:hover {
+    background-color: #218838 !important;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Cancel/Neutral Action */
+.btn-secondary, .btn-primary {
+    background-color: #6c757d !important;
+    color: #ffffff !important;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover, .btn-primary:hover {
+    background-color: #5a6268 !important;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+    transform: translateY(-1px);
+}
+
+/* ===== 5. RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .booking-wrapper, .add-table-container, .form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .time-input-group {
+        grid-template-columns: 1fr; /* Stack times on mobile */
+    }
+}

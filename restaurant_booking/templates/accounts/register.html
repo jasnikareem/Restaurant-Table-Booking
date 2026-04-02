@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-box">
+
+        <h2>Register</h2>
+        <p class="auth-subtitle">Create your account to get started</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email address" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password1" placeholder="Password" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="location" placeholder="Enter your location" required>
+            </div>
+
+            <div class="input-group">
+                <select name="role">
+                    <option value="customer">Customer</option>
+                    <option value="owner">Restaurant Owner</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-login">Register</button>
+
+            <p class="auth-footer">
+                Already have an account?
+                <a href="{% url 'login' %}">Login</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
